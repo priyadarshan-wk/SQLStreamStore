@@ -6,6 +6,6 @@ docker run --rm --name sss-build \
  -v $PWD/artifacts:/repo/artifacts \
  -v $PWD/.git:/repo/.git \
  --network host \
- -e FEEDZ_SSS_API_KEY=$FEEDZ_SSS_API_KEY \
+ -e ARTIFACTORY_ACCESS_TOKEN=$ARTIFACTORY_ACCESS_TOKEN \
  sss-build \
  dotnet run -p /repo/build/build.csproj -- "$@"

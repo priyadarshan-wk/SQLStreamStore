@@ -136,17 +136,20 @@ namespace build
                     var packagesToPush = Directory.GetFiles(ArtifactsDir, "*.nupkg", SearchOption.TopDirectoryOnly);
                     Console.WriteLine($"Found packages to publish: {string.Join("; ", packagesToPush)}");
 
-                    var apiKey = Environment.GetEnvironmentVariable("FEEDZ_SSS_API_KEY");
+                    var apiKey = Environment.GetEnvironmentVariable("ARTIFACTORY_ACCESS_TOKEN");
 
                     if (string.IsNullOrWhiteSpace(apiKey))
                     {
-                        Console.WriteLine("Feedz API key not available. Packages will not be pushed.");
+                        Console.WriteLine("ARTIFACTORY_ACCESS_TOKEN API key not available. Packages will not be pushed.");
                         return;
                     }
+                    Run("dotnet",$"nuget sources Remove -Name artifactory-ci");
+                    Run("dotnet",$"nuget sources Add -Name artifactory-ci -Source https://evisionsoftware.jfrog.io/evisionsoftware/api/nuget/dev-nuget-ci -username dev-cicd -password {apikey}");
+                    Run("dotnet",$"nuget setapikey dev-cicd:{apikey} -Source artifactory-ci");
 
                     foreach (var packageToPush in packagesToPush)
                     {
-                        Run("dotnet", $"nuget push {packageToPush} -s https://f.feedz.io/logicality/streamstore-ci/nuget/index.json -k {apiKey} --skip-duplicate", noEcho: true);
+                        Run("dotnet", $"nuget push {packageToPush} --Source artifactory-ci");
                     }
                 });
 
