@@ -8,4 +8,4 @@ docker run --rm --name sss-build \
  --network host \
  -e ARTIFACTORY_ACCESS_TOKEN=$ARTIFACTORY_ACCESS_TOKEN \
  sss-build \
- dotnet run -p /repo/build/build.csproj -- "$@"
+ dotnet run --project /repo/build/build.csproj -- "$@"
