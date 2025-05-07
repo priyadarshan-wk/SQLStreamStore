@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/dotnet/sdk:9.0
+FROM mcr.microsoft.com/dotnet/core/sdk:3.1.100-alpine3.10
 
 WORKDIR /repo
 

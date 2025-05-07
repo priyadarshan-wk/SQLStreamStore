@@ -47,7 +47,7 @@ jobs:
           fetch-depth: 0
       - name: Pull Containers
         shell: bash
-        run: docker pull mcr.microsoft.com/dotnet/sdk:9.0
+        run: docker pull mcr.microsoft.com/dotnet/core/sdk:3.1.100-alpine3.10
       - name: Build and Test
         shell: bash
         run: ./build.sh test-${{ matrix.test }}
